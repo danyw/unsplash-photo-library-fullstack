@@ -5,6 +5,7 @@ import NavBar from "./Components/NavBar";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./Pages/Home";
 import Random from "./Pages/Random";
+import MyCollections from "./Pages/MyCollections";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/random" element={<Random />} />
+          <Route path="/mycollections" element={<MyCollections />} />
         </Routes>
       </div>
     </Router>
