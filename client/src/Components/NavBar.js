@@ -10,6 +10,9 @@ const NavBar = () => {
         <li>
           <NavLink to="/random">Random</NavLink>
         </li>
+        <li>
+          <NavLink to="/mycollections">My Collections</NavLink>
+        </li>
       </ul>
     </nav>
   );
