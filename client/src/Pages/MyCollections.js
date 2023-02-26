@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const MyCollections = () => {
   const [photos, setPhotos] = useState([]);
+  
 
   useEffect(() => {
     async function fetchData() {
