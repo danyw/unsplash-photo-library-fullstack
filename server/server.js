@@ -7,10 +7,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const axios = require("axios");
 
-
-const notFoundHandler = require('./libraries/notFound');
-const unsplash = require('./libraries/unsplash');
-
+const notFoundHandler = require("./libraries/notFound");
+const unsplash = require("./libraries/unsplash");
 
 const app = express();
 
@@ -28,7 +26,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/photoLibraryUnsplash", {
 app.get("/", homeHandler);
 app.get("/searchImage", unsplash.searchImageHandler);
 app.get("/randomImage", unsplash.randomImageHandler);
-app.get("/userCollections", userCollectionsHandler);
+// app.get("/userCollections", userCollectionsHandler);
 app.get("*", notFoundHandler);
 app.post("/addPhoto", addPhotoHandler);
 
@@ -50,19 +48,16 @@ function homeHandler(request, response) {
 // }
 
 async function addPhotoHandler(req, res) {
-  const { name, userCollection, width, height, imageUrl, description } = req.body;
+  const { photoId, creatorsName, created_at, imageUrlRaw, imageURLFull, imageUrlSmall, description, width, height, blur_hash } = req.body;
 
-  let addPhoto = await photoModel.create({name, userCollection, width, height, imageUrl, description});
-  let allPhotos = await photoModel.find({});
-  res.send(allPhotos);
+  let addPhoto = await photoModel.create({ photoId, creatorsName, created_at, imageUrlRaw, imageURLFull, imageUrlSmall, description, width, height, blur_hash });
+  // let allPhotos = await photoModel.find({});
+  // res.send(allPhotos);
 }
 
-async function userCollectionsHandler(req, res) {
-  let allPhotos = await photoModel.find({});
-  res.send(allPhotos);
-}
-
-
-
+// async function userCollectionsHandler(req, res) {
+//   let allPhotos = await photoModel.find({});
+//   res.send(allPhotos);
+// }
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));

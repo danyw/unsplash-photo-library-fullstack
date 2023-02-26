@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Photos from "./Photos";
+import Photos from "./Photos/Photos";
 
 const SearchButton = () => {
   const [title, setTitle] = useState("");
