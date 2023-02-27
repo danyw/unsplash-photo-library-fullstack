@@ -27,8 +27,10 @@ app.get("/", homeHandler);
 app.get("/searchImage", unsplash.searchImageHandler);
 app.get("/randomImage", unsplash.randomImageHandler);
 // app.get("/userCollections", userCollectionsHandler);
-app.get("*", notFoundHandler);
+
 app.post("/addPhoto", addPhotoHandler);
+app.get("/userCollections", userCollectionsHandler);
+app.get("*", notFoundHandler);
 
 // Routes Handlers
 function homeHandler(request, response) {
@@ -55,9 +57,9 @@ async function addPhotoHandler(req, res) {
   // res.send(allPhotos);
 }
 
-// async function userCollectionsHandler(req, res) {
-//   let allPhotos = await photoModel.find({});
-//   res.send(allPhotos);
-// }
+async function userCollectionsHandler(req, res) {
+  let allPhotos = await photoModel.find({});
+  res.send(allPhotos);
+}
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
