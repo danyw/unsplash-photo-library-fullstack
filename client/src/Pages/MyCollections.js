@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 
 const MyCollections = () => {
-  const [photos, setPhotos] = useState([]);
+ const [photos, setPhotos] = useState([]);
   
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch("http://localhost:5001/userCollections");
-      const data = await response.json();
+    fetch(`http://localhost:5001/userCollections`)
+    .then((res) => res.json())
+    .then((data) => {
       setPhotos(data);
-    }
-    fetchData();
+      console.log(photos);
+    });
+    
   }, []);
 
   
@@ -20,7 +21,7 @@ const MyCollections = () => {
       <ul>
         {photos.map((photo) => (
           <li key={photo._id}>
-            <img src={photo.imageUrl} alt={photo.title} />
+            <img src={photo.imageUrlSmall} alt={photo.title} />
             <p>{photo.title}</p>
           </li>
         ))}
