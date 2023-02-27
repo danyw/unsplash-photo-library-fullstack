@@ -30,6 +30,7 @@ app.get("/randomImage", unsplash.randomImageHandler);
 
 app.post("/addPhoto", addPhotoHandler);
 app.get("/userCollections", userCollectionsHandler);
+app.delete('/deletePhoto/:photoId', deletePhotoHandler);
 app.get("*", notFoundHandler);
 
 // Routes Handlers
@@ -55,6 +56,21 @@ async function addPhotoHandler(req, res) {
   let addPhoto = await photoModel.create({ photoId, creatorsName, created_at, imageUrlRaw, imageURLFull, imageUrlSmall, description, width, height, blur_hash });
   // let allPhotos = await photoModel.find({});
   // res.send(allPhotos);
+}
+
+async function deletePhotoHandler(req, res) {
+  const photoId = req.params.photoId;
+  try {
+    const result = await photoModel.deleteOne({ photoId: photoId });
+    if (result.deletedCount === 0) {
+      return res.status(404).send("Not Found");
+    }
+    res.status(204).send("Deleted");
+  } catch (err) {
+    console.log("Error while deleting", err);
+    res.status(500).send("Error while deleting");
+    
+  }
 }
 
 async function userCollectionsHandler(req, res) {
