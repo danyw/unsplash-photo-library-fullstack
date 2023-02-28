@@ -10,19 +10,21 @@ import MyCollections from "./Pages/MyCollections";
 function App() {
   return (
     <Router>
-      <div className="App box-border w-screen ">
-        <div className="HeaderContainer  bg-gray-500">
-          <header className="App-header flex flex-row justify-between md:px-2 md:py-2 ">
-            <h1 className="">Pic Search</h1>
+      <div className="box-border w-full pb-2 ">
+        <div className="HeaderContainer  bg-gray-500 z-10 sticky top-0 left-0 mb-2 ">
+          <header className="App-header flex-col flex md:flex-row justify-between md:px-4 md:py-2   ">
+            <h1 className="font-serif font-bold text-2xl md:text-6xl my-auto text-center    ">Pic Search</h1>
+
             <NavBar />
           </header>
         </div>
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/random" element={<Random />} />
-          <Route path="/mycollections" element={<MyCollections />} />
-        </Routes>
+        <div className="px-2 ">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/random" element={<Random />} />
+            <Route path="/mycollections" element={<MyCollections />} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );

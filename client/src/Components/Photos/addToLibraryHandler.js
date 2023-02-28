@@ -11,5 +11,5 @@ export const addToLibraryHandler = (photoData) => {
     .then((data) => console.log(data))
     .catch((error) => console.error(error));
 
-    console.log(photoData);
+    
 };
