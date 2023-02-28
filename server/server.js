@@ -52,8 +52,16 @@ function homeHandler(request, response) {
 
 async function addPhotoHandler(req, res) {
   const { photoId, creatorsName, created_at, imageUrlRaw, imageURLFull, imageUrlSmall, description, width, height, blur_hash } = req.body;
-
+try {
+  const duplicates = await photoModel.find({ photoId: photoId }).countDocuments();
+  if( duplicates === 0) {
   let addPhoto = await photoModel.create({ photoId, creatorsName, created_at, imageUrlRaw, imageURLFull, imageUrlSmall, description, width, height, blur_hash });
+   return res.status(201).send({message: "Photo added to library"});
+  } else {
+    res.status(409).send({message: "Photo already exists in library"});
+  }} catch (err) {
+    res.status(500).send({message: "Something went wrong"});
+  }
   // let allPhotos = await photoModel.find({});
   // res.send(allPhotos);
 }
