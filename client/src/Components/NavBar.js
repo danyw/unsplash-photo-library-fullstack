@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <nav className="main-nav">
-      <ul className="flex flex-col align-middle justify-center md:flex-row gap-1 md:gap-6">
+    <nav className="main-nav flex flex-row ">
+      <ul className="flex  md:flex-row  md:gap-6 justify-around flex-1  items-center">
         <li>
           <NavLink to="/">Home</NavLink>
         </li>
