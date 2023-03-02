@@ -18,7 +18,7 @@ const Photos = ({ title, setSearchClicked, searchClicked }) => {
       {backendData.map((photo) => (
         <div key={photo.photoId} className="relative">
           <img src={`${photo.imageUrlSmall}?w=248&fit=crop&auto=format`} alt={photo.title} loading="lazy" className="mb-4" />
-          <div className="absolute bottom-0 left-0 right-0  p-2 bg-slate-600 flex justify-between items-center opacity-0 hover:opacity-100">
+          <div className="absolute bottom-0 left-0 right-0  p-2 bg-gray-600 flex justify-between items-center opacity-0 hover:opacity-80 transition-opacity duration-200">
             <p className="text-white font-serif text-sm m-0 ">{photo.creatorsName}</p>
             <button
               onClick={() => addToLibraryHandler(photo)}
