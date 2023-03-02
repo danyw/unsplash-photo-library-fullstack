@@ -3,7 +3,6 @@
 const axios = require("axios"); // npm i axios
 const superagent = require("superagent"); // npm i superagent
 
-
 // http://localhost:3000/searchImage?title=cat
 function searchImageHandler(request, response) {
   const title = request.query.title;
@@ -12,7 +11,7 @@ function searchImageHandler(request, response) {
   axios
     .get(url)
     .then((imgData) => {
-      const images = imgData.data.results.map((data) => new Photo(data));   
+      const images = imgData.data.results.map((data) => new Photo(data));
       response.status(200).send(images);
     })
     .catch((err) => {
@@ -20,15 +19,13 @@ function searchImageHandler(request, response) {
     });
 }
 
-
 // http://localhost:3000/randomImage
 async function randomImageHandler(request, response) {
-  
   const url = `https://api.unsplash.com/photos/random?client_id=${process.env.UNSPLASH_API_KEY}`;
   try {
     let imgData = await superagent.get(url);
     console.log(imgData);
-    let randomImg = await new Photo(imgData.body)
+    let randomImg = await new Photo(imgData.body);
     response.status(200).send(randomImg);
   } catch {
     response.status(500).send("something went wrong");

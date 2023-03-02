@@ -26,11 +26,12 @@ mongoose.connect("mongodb://127.0.0.1:27017/photoLibraryUnsplash", {
 app.get("/", homeHandler);
 app.get("/searchImage", unsplash.searchImageHandler);
 app.get("/randomImage", unsplash.randomImageHandler);
-// app.get("/userCollections", userCollectionsHandler);
+app.get("/userCollections", userCollectionsHandler);
 
 app.post("/addPhoto", addPhotoHandler);
-app.get("/userCollections", userCollectionsHandler);
-app.delete('/deletePhoto/:photoId', deletePhotoHandler);
+app.patch("/addToCollection", addToCollectionHandler);
+app.delete("/deletePhoto/:photoId", deletePhotoHandler);
+
 app.get("*", notFoundHandler);
 
 // Routes Handlers
@@ -38,32 +39,30 @@ function homeHandler(request, response) {
   response.send("Hello world!");
 }
 
-// handling db
-// async function getAPIProductsHandler(req, res) {
-//   let productsapi = await axios.get('http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline');
-//   res.status(200).send(productsapi.data);
-//   console.log(productsapi.data);
-// }
-
-// async function getProductsHandler(req, res) {
-//   let products = await productModel.find({});
-//   res.send(products);
-// }
-
 async function addPhotoHandler(req, res) {
   const { photoId, creatorsName, created_at, imageUrlRaw, imageURLFull, imageUrlSmall, description, width, height, blur_hash } = req.body;
-try {
-  const duplicates = await photoModel.find({ photoId: photoId }).countDocuments();
-  if( duplicates === 0) {
-  let addPhoto = await photoModel.create({ photoId, creatorsName, created_at, imageUrlRaw, imageURLFull, imageUrlSmall, description, width, height, blur_hash });
-   return res.status(201).send({message: "Photo added to library"});
-  } else {
-    res.status(409).send({message: "Photo already exists in library"});
-  }} catch (err) {
-    res.status(500).send({message: "Something went wrong"});
+  try {
+    const duplicates = await photoModel.find({ photoId: photoId }).countDocuments();
+    if (duplicates === 0) {
+      let addPhoto = await photoModel.create({
+        photoId,
+        creatorsName,
+        created_at,
+        imageUrlRaw,
+        imageURLFull,
+        imageUrlSmall,
+        description,
+        width,
+        height,
+        blur_hash,
+      });
+      return res.status(201).send({ message: "Photo added to library" });
+    } else {
+      res.status(409).send({ message: "Photo already exists in library" });
+    }
+  } catch (err) {
+    res.status(500).send({ message: "Something went wrong" });
   }
-  // let allPhotos = await photoModel.find({});
-  // res.send(allPhotos);
 }
 
 async function deletePhotoHandler(req, res) {
@@ -77,13 +76,23 @@ async function deletePhotoHandler(req, res) {
   } catch (err) {
     console.log("Error while deleting", err);
     res.status(500).send("Error while deleting");
-    
   }
 }
 
 async function userCollectionsHandler(req, res) {
   let allPhotos = await photoModel.find({});
   res.send(allPhotos);
+}
+
+async function addToCollectionHandler(req, res) {
+  const { photoId, userCollection } = req.body;
+  try {
+    const result = await photoModel.findOneAndUpdate({ photoId: photoId }, { $push: { userCollection: userCollection } }, { new: true });
+
+    res.status(201).send({ message: "Photo added to collection" });
+  } catch (err) {
+    console.log("Error while updating", err);
+  }
 }
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));

@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import React from "react";
 import NavBar from "./Components/NavBar";
@@ -12,8 +11,8 @@ function App() {
     <Router>
       <div className="box-border w-full pb-2 ">
         <div className="HeaderContainer  bg-gray-500 z-10 sticky top-0 left-0 mb-2 ">
-          <header className="App-header flex-col flex md:flex-row justify-between md:px-4 md:py-2   ">
-            <h1 className="font-serif font-bold text-2xl md:text-6xl my-auto text-center    ">Pic Search</h1>
+          <header className="App-header flex-col flex md:flex-row justify-between md:px-4 md:py-2">
+            <h1 className="font-serif font-bold text-2xl md:text-6xl my-auto text-center">Pic Search</h1>
 
             <NavBar />
           </header>
